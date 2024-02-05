@@ -67,6 +67,8 @@ class FileStorage:
 
     def get(self, cls, id):
         """Retrieve an element by class name and id"""
+        if type(cls) is str:
+            cls = eval(cls)
         obj_key = cls.__name__ + "." + id
         return self.__objects.get(obj_key, None)
 
@@ -74,6 +76,8 @@ class FileStorage:
         """Retrieving the count of objects"""
         if not cls:
             return len(self.__objects)
+        if type(cls) is str:
+            cls = eval(cls)
         cnt = 0
         for obj in self.__objects.values():
             if obj.__class__ == cls:

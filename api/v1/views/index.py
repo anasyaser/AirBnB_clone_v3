@@ -2,7 +2,7 @@
 """Simple page to test api"""
 from flask import jsonify
 from api.v1.views import app_views
-
+from models import storage
 
 @app_views.route('/status')
 def status():
@@ -13,11 +13,11 @@ def status():
 def get_stats():
     """Retrieves the number of each objects"""
     stats = {
-        "Amenity": "amenities",
-        "City": "cities",
-        "Place": "places",
-        "Review": "reviews",
-        "State": "states",
-        "User": "users"
+        "amenities": "Amenity",
+        "cities": "City",
+        "places": "Place",
+        "reviews": "Review",
+         "states": "State",
+         "users": "User"
     }
-    return jsonify({name: storage.count(cls) for cls, name in stats.items()})
+    return jsonify({name: storage.count(cls) for name, cls in stats.items()})
