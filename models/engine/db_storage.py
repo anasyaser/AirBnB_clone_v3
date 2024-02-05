@@ -32,7 +32,7 @@ class DBStorage:
         HBNB_MYSQL_HOST = getenv('HBNB_MYSQL_HOST')
         HBNB_MYSQL_DB = getenv('HBNB_MYSQL_DB')
         HBNB_ENV = getenv('HBNB_ENV')
-        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.
+        self.__engine = create_engine('mysql+mysqlconnector://{}:{}@{}/{}'.
                                       format(HBNB_MYSQL_USER,
                                              HBNB_MYSQL_PWD,
                                              HBNB_MYSQL_HOST,
@@ -77,7 +77,11 @@ class DBStorage:
 
     def get(self, cls, id):
         """Retrieve an obj from database"""
-        return self.__session.query(cls).filter(cls.id == id).first()
+        result = self.__session.query(cls).filter(cls.id == id).first()
+        if not result:
+            return None
+        else:
+            return result
 
     def count(self, cls=None):
         """Retrieve number of objects"""
