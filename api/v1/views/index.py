@@ -4,10 +4,12 @@ from flask import jsonify
 from api.v1.views import app_views
 from models import storage
 
+
 @app_views.route('/status')
 def status():
     """Return the status"""
     return jsonify({"status": "OK"}), 200
+
 
 @app_views.route('stats')
 def get_stats():
@@ -17,7 +19,7 @@ def get_stats():
         "cities": "City",
         "places": "Place",
         "reviews": "Review",
-         "states": "State",
-         "users": "User"
+        "states": "State",
+        "users": "User"
     }
     return jsonify({name: storage.count(cls) for name, cls in stats.items()})
