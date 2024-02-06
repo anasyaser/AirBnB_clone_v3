@@ -23,7 +23,7 @@ def get_state(state_id):
     if not state:
         abort(404)
 
-    if request.method == "POST":
+    if request.method == "PUT":
         json_data = request.get_json(silent=True)
         if not json_data:
             return jsonify({'error': 'Not a JSON'}), 400
@@ -32,7 +32,7 @@ def get_state(state_id):
         json_data.pop('updated_at', None)
         state = State(**json_data)
         state.save()
-        return jsonify(state.to_dict()), 200
+        return jsonify(state.to_dict()), 201
     return jsonify(state.to_dict()), 201
 
 
